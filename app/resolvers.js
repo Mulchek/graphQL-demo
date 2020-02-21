@@ -10,9 +10,9 @@ const resolvers = {
       createClass(args, context),
   },
   Class: {
-    instructor: (parent, params, context) => 
+    instructor: (parent, args, context) => 
       getUser(parent.instructorId, context),
-    attendees  : (parent, params, context) => 
+    attendees  : (parent, args, context) => 
       getClassAttendees(parent.id, context)
   }
 }
