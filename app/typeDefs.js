@@ -2,24 +2,22 @@ const { gql } = require('apollo-server');
 
 const typeDefs = gql`
   type Query {
-    classes(limit: Int offset: Int): [Class]
+    classes(limit: Int offset: Int isActive: Boolean): [Class]
   }
 
   type Mutation {
-    addClass(class: NewClass!): Class
+    createClass(class: NewClass!): Class
+    updateClass(id: ID! class: UpdateClass!): Class
+    deleteClass(id: ID!): Class
   }
 
   type Class {
     id: ID
     title: String
     description: String
+    isActive: Boolean
     instructor: User
     attendees: [User]
-  }
-
-  input NewClass {
-    title: String!
-    description: String    
   }
 
   type User {
@@ -29,6 +27,17 @@ const typeDefs = gql`
     emailAddress: String
     role: String
   }
+  
+  input NewClass {
+    title: String!
+    description: String    
+  }
+
+  input UpdateClass {
+    title: String
+    description: String    
+  }
+
 `;
 
 module.exports = {

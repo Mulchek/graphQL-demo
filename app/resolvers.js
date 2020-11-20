@@ -1,19 +1,23 @@
-const { getClasses, getUser, getClassAttendees, createClass } = require('./dataAccess')
+const { getClasses, getUser, getClassAttendees, addClass, modifyClass, removeClass } = require('./dataAccess')
 
 const resolvers = {
   Query: {
-    classes: (parent, args, context, info) =>
+    classes: (object, args, context, info) =>
       getClasses(args, context)
   },
   Mutation: {
-    addClass: (parent, args, context) =>
-      createClass(args, context),
+    createClass: (object, args, context) =>
+      addClass(args, context),
+    updateClass: (object, args, context) => 
+      modifyClass(args, context),
+    deleteClass: (object, args, context) =>
+      removeClass(args, context)
   },
   Class: {
-    instructor: (parent, args, context) => 
-      getUser(parent.instructorId, context),
-    attendees  : (parent, args, context) => 
-      getClassAttendees(parent.id, context)
+    instructor: (object, args, context) => 
+      getUser(object.instructorId, context),
+    attendees  : (object, args, context) => 
+      getClassAttendees(object.id, context)
   }
 }
 
